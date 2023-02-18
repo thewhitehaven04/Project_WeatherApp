@@ -1,0 +1,14 @@
+:root {
+  box-sizing: border-box;
+}
+
+*,
+*:after,
+*::before {
+  box-sizing: inherit;
+}
+
+ul {
+  display: flex;
+  flex-flow: column;
+}

@@ -1,5 +1,5 @@
 import { apiKeys } from '../../config/config';
-import { stringifyQueryParameters } from '../clientUtils';
+import { stringifyQueryParameters } from '../../utils/clientUtils';
 
 /** Base class for OpenWeather API client
  * @class OpenWeatherClient

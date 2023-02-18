@@ -1,3 +1,4 @@
+import { units } from '../../dto/openweather/requestEnums';
 import { OpenWeatherClient } from './openweather';
 /**
  * OpenWeather's CurrentWeather API client class.
@@ -5,18 +6,20 @@ import { OpenWeatherClient } from './openweather';
  */
 class CurrentWeatherClient extends OpenWeatherClient {
   /**
-   * @param {String} rootUrl OpenWeather's CurrentWeather controller root URL 
+   * @param {String} rootUrl OpenWeather's CurrentWeather controller root URL
    */
   constructor(rootUrl) {
-    super(rootUrl);
+    super(rootUrl + 'data/2.5/');
   }
 
   /**
    * Return weather data for the given point.
-   * @param {Coordinates} coordinates geographical coordinates of the point to get the weather data for 
+   * @param {Coordinates} coordinates geographical coordinates of the point to get the weather data for
+   * @param {units} units
+   * @return {Promise<CurrentWeatherDto>}
    */
-  async getCurrentWeather(coordinates) {
-    return (await this.get('weather', coordinates)).json()
+  async getCurrentWeather(coordinates, units) {
+    return (await this.get('weather', { ...coordinates, units })).json();
   }
 }
 

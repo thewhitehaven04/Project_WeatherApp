@@ -14,7 +14,7 @@ const apiKeys = {
  * @enum {String}
  */
 const urls = {
-  openWeatherApiRootUrl: 'https://api.openweathermap.org/data/2.5',
+  openWeatherApiRootUrl: 'https://api.openweathermap.org/',
 };
 
 export { apiKeys, urls };

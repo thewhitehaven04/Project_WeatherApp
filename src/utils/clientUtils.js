@@ -8,4 +8,12 @@ const stringifyQueryParameters = function (...params) {
   return new URLSearchParams(Object.fromEntries(accumObj.flat())).toString();
 }
 
-export { stringifyQueryParameters };
+
+/**
+ * @param {LocationDto} locationDto 
+*/
+const formLocationQuery = function (locationDto) {
+  return `${locationDto.cityName},${locationDto.stateCode},${locationDto.countryCode}`
+}
+
+export { stringifyQueryParameters, formLocationQuery };
