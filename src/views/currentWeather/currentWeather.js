@@ -1,7 +1,7 @@
-import format from 'date-fns/format';
 import { units } from '../../dto/openweather/requestEnums';
 import { LastUpdatedView } from '../lastUpdated/lastUpdated';
 import { TemperatureDataView } from '../temperature/temperature';
+import { WindView } from '../wind/wind';
 
 /**
  * @template T
@@ -22,6 +22,7 @@ function currentWeatherView(unit, requestWeatherCallback) {
 
   const frag = document.createDocumentFragment();
   const tempsDiv = document.createElement('div');
+  const windsDiv = document.createElement('div');
   const lastUpdatedDiv = document.createElement('div');
 
   /**
@@ -44,6 +45,7 @@ function currentWeatherView(unit, requestWeatherCallback) {
     tempsDiv.replaceChildren(
       TemperatureDataView(currentState.main, unit).render(),
     );
+    windsDiv.replaceChildren(WindView(currentState.wind, unit).render());
     lastUpdatedDiv.replaceChildren(
       LastUpdatedView(currentState.lastUpdated).render(),
     );
@@ -63,8 +65,9 @@ function currentWeatherView(unit, requestWeatherCallback) {
     );
 
     tempsDiv.classList.add('current-weather__temperature');
+    windsDiv.classList.add('current-weather__winds');
     lastUpdatedDiv.classList.add('current-weather__last-updated');
-    article.append(...[tempsDiv, buttonUpdate, lastUpdatedDiv]);
+    article.append(...[tempsDiv, windsDiv, buttonUpdate, lastUpdatedDiv]);
 
     frag.replaceChildren(article);
 

@@ -2,7 +2,7 @@
  * Returns a list item with given icon.
  * @param {import("./fontawesomeIcon/icon").Icon} icon
  * @param {String} pattern
- * @param value
+ * @param {Object} value
  */
 const listItemWithIcon = function (icon, pattern, value) {
   const li = document.createElement('li');

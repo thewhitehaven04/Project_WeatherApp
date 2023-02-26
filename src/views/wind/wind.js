@@ -8,7 +8,7 @@ import { listItemWithIcon } from '../listItemWithIcon';
  * @param {units} unit
  */
 const _formatSpeedForUnit = function (speed, unit) {
-  if ((unit = units.IMPERIAL)) {
+  if (unit === units.IMPERIAL) {
     return `${speed} mph`;
   }
   return `${speed} m/s`;

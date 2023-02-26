@@ -5,7 +5,7 @@ import { getLocalCoordinates } from '../geolocation/geolocation';
 import { loadingComponent } from '../views/loading/loading';
 
 /**
- * @param {import("../service/weather").WeatherService} CurrentWeatherService
+ * @param {import("../service/currentWeatherService").WeatherService} CurrentWeatherService
  * @param {function(units, function(Coordinates):void):import("../views/currentWeather/currentWeather").CurrentWeatherView<CurrentWeatherDto>} currenWeatherViewFactory
  * @param {HTMLElement} root root element of the component
  */
