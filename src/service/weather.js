@@ -5,21 +5,22 @@ import { units } from '../dto/openweather/requestEnums';
 /**
  * @typedef {Object} WeatherService
  * @property {function(units, Coordinates):void} update
- * @property {function():MainDto} getMain
- * @property {function():WeatherDto} getWeather
- * @property {function():WindDto} getWind
- * @property {function():CurrentWeatherDto} getCurrentWeather 
+ * @property {function():Promise<MainDto>} getMain
+ * @property {function():Promise<WeatherDto[]>} getWeather
+ * @property {function():Promise<WindDto>} getWind
+ * @property {function():Promise<CurrentWeatherInfo>} getCurrentWeather
  */
 
 /**
  * @param {CurrentWeatherClient} client
  */
-const weatherService = ((client) => {
+const CurrentWeatherService = ((client) => {
   /**
    * Latest acquired weather data.
-   * @type {CurrentWeatherDto}
+   * @type {Promise<CurrentWeatherDto>}
    */
   let _response;
+  let lastUpdated;
 
   /**
    * Request current weather.
@@ -27,14 +28,19 @@ const weatherService = ((client) => {
    * @param {units} unit
    * @param {Coordinates} coords
    */
-  async function update(unit, coords) {
-    _response = await client.getCurrentWeather(coords, unit);
+  function update(unit, coords) {
+    lastUpdated = { lastUpdated: new Date() };
+    _response = client.getCurrentWeather(coords, unit);
   }
 
-  const getMain = () => _response.main;
-  const getWeather = () => _response.weather;
-  const getWind = () => _response.wind;
-  const getCurrentWeather = () => _response;
+  const getMain = async () => (await _response).main;
+  const getWeather = async () => (await _response).weather;
+  const getWind = async () => (await _response).wind;
+  /**
+   * @returns {Promise<CurrentWeatherInfo>} 
+   */
+  const getCurrentWeather = async () =>
+    Object.assign({}, await _response, lastUpdated);
 
   return {
     update,
@@ -45,4 +51,4 @@ const weatherService = ((client) => {
   };
 })(new CurrentWeatherClient(urls.openWeatherApiRootUrl));
 
-export { weatherService };
+export { CurrentWeatherService };

@@ -8,7 +8,7 @@
  * @template T
  * @typedef Updatable<T>
  * @property {function(T):void} setState
- * @property {function(T):void} update
+ * @property {function():void} update
  */
 
 /**

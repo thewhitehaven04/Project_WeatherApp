@@ -1,46 +1,51 @@
+import { app } from '../app';
 import { units } from '../dto/openweather/requestEnums';
 import { EventBus } from '../event/eventBus';
 import { getLocalCoordinates } from '../geolocation/geolocation';
-import { requestCurrentWeatherEvent } from '../views/currentWeather/currentWeather';
 import { loadingComponent } from '../views/loading/loading';
 
 /**
- * @param {import("../service/weather").WeatherService} service
- * @param {import("../views/currentWeather/currentWeather").CurrentWeatherView<CurrentWeatherDto>} view
- * @param {units} unit
+ * @param {import("../service/weather").WeatherService} CurrentWeatherService
+ * @param {function(units, function(Coordinates):void):import("../views/currentWeather/currentWeather").CurrentWeatherView<CurrentWeatherDto>} currenWeatherViewFactory
+ * @param {HTMLElement} root root element of the component
  */
-const CurrentWeather = async function (service, view, unit, root) {
-  let initialLocation = await getLocalCoordinates();
+const CurrentWeather = function (
+  CurrentWeatherService,
+  currenWeatherViewFactory,
+  root,
+) {
+  let initialLocation = getLocalCoordinates();
   let rootChild;
+  const unit = app.unit;
 
-  /**
-   * @param {Coordinates} location
-   */
-  const update = function (location) {
+  const view = currenWeatherViewFactory(unit, update);
+
+  /** @param {Coordinates} location */
+  async function update(location) {
     let loading = loadingComponent(rootChild);
     loading.show();
-    service.update(unit, location);
+    CurrentWeatherService.update(unit, location);
     loading.hide();
-    view.setState(service.getCurrentWeather());
-  };
+    view.setState(await CurrentWeatherService.getCurrentWeather());
+    view.update();
+  }
 
-  const render = function () {
+  async function render() {
     let loading = loadingComponent(root);
     loading.show();
-    service.update(unit, initialLocation);
+    CurrentWeatherService.update(unit, await initialLocation);
     loading.hide();
-    view.setState(service.getCurrentWeather());
+    view.setState(await CurrentWeatherService.getCurrentWeather());
     rootChild = view.render();
     return rootChild;
-  };
+  }
 
   const hide = () => view.hide();
-
-  EventBus.subscribe(requestCurrentWeatherEvent, update);
 
   return {
     update,
     render,
+    hide,
   };
 };
 

@@ -1,4 +1,20 @@
 .current-weather {
   display: grid;
+  grid-template-areas:
+    "temperature ."
+    "temperature last-updated"
+    "temperature update";
   grid-template-columns: repeat(2, 1fr);
+}
+
+.current-weather__update {
+  grid-area: 'update';
+}
+
+.current-weather__last-updated {
+  grid-area: 'last-updated'
+}
+
+.current-weather__temperature {
+  grid-area: 'temperature';
 }

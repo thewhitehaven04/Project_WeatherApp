@@ -1,8 +1,7 @@
+import format from 'date-fns/format';
 import { units } from '../../dto/openweather/requestEnums';
-import { EventBus } from '../../event/eventBus';
+import { LastUpdatedView } from '../lastUpdated/lastUpdated';
 import { TemperatureDataView } from '../temperature/temperature';
-
-const requestCurrentWeatherEvent = 'requestCurrentWeatherEvent';
 
 /**
  * @template T
@@ -10,28 +9,33 @@ const requestCurrentWeatherEvent = 'requestCurrentWeatherEvent';
  */
 
 /**
+ * @param {units} unit
+ * @param {function(Coordinates):void} requestWeatherCallback
  * @returns {CurrentWeatherView<CurrentWeatherDto>}
  * @param {units} unit
  */
-function currentWeatherView(unit) {
+function currentWeatherView(unit, requestWeatherCallback) {
   /**
-   * @type {CurrentWeatherDto}
+   * @type {CurrentWeatherInfo}
    */
   let currentState;
 
   const frag = document.createDocumentFragment();
   const tempsDiv = document.createElement('div');
+  const lastUpdatedDiv = document.createElement('div');
 
-  /** @type {function(Coordinates):void} */
-  const _requestData = (coords) => {
-    EventBus.notify(requestCurrentWeatherEvent, coords);
-  };
+  /**
+   * @param {Coordinates} params
+   */
+  const _requestWeatherData = (params) => requestWeatherCallback(params);
 
   /**
    * Updates the state.
-   * @param {CurrentWeatherDto} currentWeather
+   * @param {CurrentWeatherInfo} currentWeather
    */
-  const setState = (currentWeather) => (currentState = currentWeather);
+  const setState = function (currentWeather) {
+    currentState = currentWeather;
+  };
 
   /**
    * Updates values of the form with the values from `currentState`
@@ -39,6 +43,9 @@ function currentWeatherView(unit) {
   const update = function () {
     tempsDiv.replaceChildren(
       TemperatureDataView(currentState.main, unit).render(),
+    );
+    lastUpdatedDiv.replaceChildren(
+      LastUpdatedView(currentState.lastUpdated).render(),
     );
   };
 
@@ -49,13 +56,15 @@ function currentWeatherView(unit) {
     update();
 
     const buttonUpdate = document.createElement('button');
+    buttonUpdate.classList.add('current-weather__update');
     buttonUpdate.textContent = 'Update';
-    buttonUpdate.addEventListener(
-      'click',
-      _requestData.bind(this, currentState.coord),
+    buttonUpdate.addEventListener('click', () =>
+      _requestWeatherData(currentState.coord),
     );
 
-    article.append(...[tempsDiv, buttonUpdate]);
+    tempsDiv.classList.add('current-weather__temperature');
+    lastUpdatedDiv.classList.add('current-weather__last-updated');
+    article.append(...[tempsDiv, buttonUpdate, lastUpdatedDiv]);
 
     frag.replaceChildren(article);
 
@@ -69,4 +78,4 @@ function currentWeatherView(unit) {
   return { render, hide, update, setState };
 }
 
-export { currentWeatherView, requestCurrentWeatherEvent };
+export { currentWeatherView };

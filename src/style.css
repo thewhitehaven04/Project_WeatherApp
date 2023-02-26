@@ -1,5 +1,7 @@
 :root {
   box-sizing: border-box;
+  font-family: 'Open Sans Regular', serif;
+  font-size: 11pt;
 }
 
 *,
@@ -11,4 +13,10 @@
 ul {
   display: flex;
   flex-flow: column;
+  row-gap: 0.3em;
 }
+
+li {
+  list-style-type: none;
+}
+

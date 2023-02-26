@@ -47,3 +47,8 @@
  * Current weather data as returned from the OpenWeather API.
  * @typedef {{coord: ?Coordinates, main: ?MainDto, wind: ?WindDto, weather: ?WeatherDto[]}} CurrentWeatherDto
  */
+
+/**
+ * Current weather data enriched with the datetime of last update
+ * @typedef {CurrentWeatherDto & {lastUpdated: Date}} CurrentWeatherInfo
+ */

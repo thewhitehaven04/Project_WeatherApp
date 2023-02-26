@@ -11,11 +11,9 @@ const loadingComponent = function (root) {
   let rendered;
 
   const render = () => {
-    const fragment = document.createDocumentFragment();
     const overlay = document.createElement('div');
     overlay.classList.add('loading');
-    overlay.appendChild(overlay);
-    return fragment;
+    return overlay;
   };
   return {
     show: () => {

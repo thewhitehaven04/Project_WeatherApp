@@ -1,9 +1,10 @@
 import { units } from '../../dto/openweather/requestEnums';
 import {
   CurrentTemperatureIcon,
+  FeelsLikeIcon,
   TemperatureHighIcon,
   TemperatureLowIcon,
-} from '../icon';
+} from '../fontawesomeIcon/icon';
 
 /**
  * Format temperature output depending on the unit.
@@ -68,15 +69,31 @@ const maxTemp = (temperature, unit) => {
   return li;
 };
 
+const feelsLike = (temperature, unit) => {
+  const li = document.createElement('li');
+  const span = document.createElement('span');
+  span.textContent = `Feels like: ${_formatTemperatureForUnit(
+    temperature,
+    unit,
+  )}`;
+  li.appendChild(FeelsLikeIcon().render(), span);
+  return li;
+};
+
 /**
  * @typedef {function(MainDto, units): View}
  * @param {MainDto} mainDto
  * @param {units} unit
  */
-const TemperatureDataView = function ({ temp, temp_max, temp_min }, unit) {
+const TemperatureDataView = function (
+  { temp, temp_max, temp_min, feels_like },
+  unit,
+) {
   /** @type {function(MainDto, units):HTMLElement} */
   return {
     render: () => {
+      const div = document.createElement('div');
+      div.classList.add('temperature-widget');
       const ul = document.createElement('ul');
       ul.append(
         ...[
@@ -85,7 +102,9 @@ const TemperatureDataView = function ({ temp, temp_max, temp_min }, unit) {
           maxTemp(temp_max, unit),
         ],
       );
-      return ul;
+
+      div.append(ul, feelsLike(feels_like, unit));
+      return div;
     },
   };
 };

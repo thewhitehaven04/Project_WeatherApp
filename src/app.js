@@ -1,26 +1,21 @@
-import { CurrentWeatherClient } from './client/openweather/currentWeather';
-import { urls } from './config/config';
 import { units } from './dto/openweather/requestEnums';
-import { getLocalCoordinates } from './geolocation/geolocation';
 import { currentWeatherView } from './views/currentWeather/currentWeather';
-import style from './style.css';
 import { CurrentWeather } from './components/currentWeather';
-import { weatherService } from './service/weather';
+import { CurrentWeatherService } from './service/weather';
+import style from './style.css';
+import '@fortawesome/fontawesome-free/js/all.js';
 
 const body = document.querySelector('body');
 
 const app = {
   unit: units.METRIC,
   run: async () => {
-    body.append(
-      (
-        await CurrentWeather(
-          weatherService,
-          currentWeatherView(units.METRIC),
-          units.METRIC,
-        )
-      ).render(),
+    const currentWeather = CurrentWeather(
+      CurrentWeatherService,
+      currentWeatherView,
+      body,
     );
+    body.append(await currentWeather.render());
   },
 };
 
