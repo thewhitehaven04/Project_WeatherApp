@@ -11,13 +11,14 @@ class ForecastClient extends OpenWeatherClient {
 
   /**
    * Get an hourly forecast for the following 4 days.
+   * @async
    * @param {Coordinates} coordinates
    * @param {units} units
+   * @returns {Promise<ForecastResponseDto>}
    */
   async getFivedayForecast(coordinates, units) {
     return await (await this.get('', { ...coordinates, units })).json();
   }
-
 }
 
 export { ForecastClient };

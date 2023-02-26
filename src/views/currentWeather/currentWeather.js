@@ -11,7 +11,7 @@ import { WindView } from '../wind/wind';
 /**
  * @param {units} unit
  * @param {function(Coordinates):void} requestWeatherCallback
- * @returns {CurrentWeatherView<CurrentWeatherDto>}
+ * @returns {CurrentWeatherView<CurrentWeatherResponseDto>}
  * @param {units} unit
  */
 function currentWeatherView(unit, requestWeatherCallback) {

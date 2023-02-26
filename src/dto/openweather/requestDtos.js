@@ -102,3 +102,7 @@
  * cnt: Number
  * }} ForecastResponseDto
  */
+
+/**
+ * @typedef {{list: CurrentWeatherResponseDto[], city: CityResponseDto}} ForecastInfoDto
+ */

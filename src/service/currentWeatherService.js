@@ -13,11 +13,12 @@ import { units } from '../dto/openweather/requestEnums';
 
 /**
  * @param {CurrentWeatherClient} client
+ * @returns {WeatherService}
  */
 const CurrentWeatherService = ((client) => {
   /**
    * Latest acquired weather data.
-   * @type {Promise<CurrentWeatherDto>}
+   * @type {Promise<CurrentWeatherResponseDto>}
    */
   let _response;
   let lastUpdated;
@@ -33,11 +34,20 @@ const CurrentWeatherService = ((client) => {
     _response = client.getCurrentWeather(coords, unit);
   }
 
+  /**
+   * @returns {Promise<MainDto>}
+   */
   const getMain = async () => (await _response).main;
+  /**
+   * @returns {Promise<WeatherDto[]>}
+   */
   const getWeather = async () => (await _response).weather;
+  /**
+   * @returns {Promise<WindDto>}
+   */
   const getWind = async () => (await _response).wind;
   /**
-   * @returns {Promise<CurrentWeatherInfo>} 
+   * @returns {Promise<CurrentWeatherInfo>}
    */
   const getCurrentWeather = async () =>
     Object.assign({}, await _response, lastUpdated);
