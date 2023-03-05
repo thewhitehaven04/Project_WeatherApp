@@ -3,6 +3,11 @@ import { urls } from '../config/config';
 import { units } from '../dto/openweather/requestEnums';
 
 /**
+ * Current weather data enriched with the datetime of last update
+ * @typedef {CurrentWeatherResponseDto & {lastUpdated: Date}} CurrentWeatherInfo
+ */
+
+/**
  * @typedef {Object} WeatherService
  * @property {function(units, Coordinates):void} update
  * @property {function():Promise<MainDto>} getMain
@@ -15,7 +20,7 @@ import { units } from '../dto/openweather/requestEnums';
  * @param {CurrentWeatherClient} client
  * @returns {WeatherService}
  */
-const CurrentWeatherService = ((client) => {
+const currentWeatherService = ((client) => {
   /**
    * Latest acquired weather data.
    * @type {Promise<CurrentWeatherResponseDto>}
@@ -61,4 +66,4 @@ const CurrentWeatherService = ((client) => {
   };
 })(new CurrentWeatherClient(urls.openWeatherApiRootUrl));
 
-export { CurrentWeatherService };
+export { currentWeatherService };

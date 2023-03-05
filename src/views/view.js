@@ -1,7 +1,11 @@
 /**
+ * @typedef Hideable
+ * @property {function():void} hide hides the fragment
+ */
+
+/**
  * @typedef View
  * @property {function():DocumentFragment} render
- * @property {function():void} hide removes the rendered element 
  */
 
 /**
@@ -13,5 +17,6 @@
 
 /**
  * @template T
- * @typedef {Updatable<T> & View} UpdatableView<T> 
+ * @mixes Hideable
+ * @typedef {Updatable<T> & View & Hideable}  UpdatableView<T>
  */

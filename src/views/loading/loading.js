@@ -1,29 +1,20 @@
+import style from './loading.css';
 /**
- * @typedef {{show: function(): void, hide: function(): void}} LoadingComponent
+ * @typedef {{
+ * show: {function(): void},
+ * hide: {function(): void}
+ * }} LoadingComponent
  */
 
 /**
  * Renders a loading wheel.
- * @returns {LoadingComponent}
+ * @constructs LoadingComponent
  * @param {HTMLElement} root
  */
-const loadingComponent = function (root) {
-  let rendered;
-
-  const render = () => {
-    const overlay = document.createElement('div');
-    overlay.classList.add('loading');
-    return overlay;
-  };
-  return {
-    show: () => {
-      rendered = render();
-      root.appendChild(rendered);
-    },
-    hide: () => {
-      root.removeChild(rendered);
-    },
-  };
+const loadingComponentFactory = function (root) {
+  const show = () => root.classList.add('loading');
+  const hide = () => root.classList.remove('loading');
+  return { show, hide };
 };
 
-export { loadingComponent };
+export { loadingComponentFactory };

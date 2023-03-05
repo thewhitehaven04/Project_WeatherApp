@@ -1,5 +1,6 @@
 import { units } from '../../dto/openweather/requestEnums';
 import { LastUpdatedView } from '../lastUpdated/lastUpdated';
+import { loadingComponentFactory } from '../loading/loading';
 import { TemperatureDataView } from '../temperature/temperature';
 import { WindView } from '../wind/wind';
 
@@ -9,21 +10,28 @@ import { WindView } from '../wind/wind';
  */
 
 /**
+ * @typedef {function(units, Function): CurrentWeatherView<CurrentWeatherResponseDto>} CurrentWeatherViewFactory
+ */
+
+/**
  * @param {units} unit
  * @param {function(Coordinates):void} requestWeatherCallback
- * @returns {CurrentWeatherView<CurrentWeatherResponseDto>}
+ * @constructs CurrentWeatherView<CurrentWeatherResponseDto>
  * @param {units} unit
  */
 function currentWeatherView(unit, requestWeatherCallback) {
   /**
-   * @type {CurrentWeatherInfo}
+   * @type {import('../../service/currentWeatherService').CurrentWeatherInfo}
    */
   let currentState;
 
-  const frag = document.createDocumentFragment();
+  let frag = document.createDocumentFragment();
   const tempsDiv = document.createElement('div');
   const windsDiv = document.createElement('div');
   const lastUpdatedDiv = document.createElement('div');
+  tempsDiv.classList.add('current-weather__temperature');
+  windsDiv.classList.add('current-weather__winds');
+  lastUpdatedDiv.classList.add('current-weather__last-updated');
 
   /**
    * @param {Coordinates} params
@@ -32,7 +40,7 @@ function currentWeatherView(unit, requestWeatherCallback) {
 
   /**
    * Updates the state.
-   * @param {CurrentWeatherInfo} currentWeather
+   * @param {import('../../service/currentWeatherService').CurrentWeatherInfo} currentWeather
    */
   const setState = function (currentWeather) {
     currentState = currentWeather;
@@ -54,19 +62,19 @@ function currentWeatherView(unit, requestWeatherCallback) {
   const render = function () {
     const article = document.createElement('article');
     article.classList.add('current-weather');
+    const loadingComponent = loadingComponentFactory(article);
 
     update();
 
     const buttonUpdate = document.createElement('button');
     buttonUpdate.classList.add('current-weather__update');
     buttonUpdate.textContent = 'Update';
-    buttonUpdate.addEventListener('click', () =>
-      _requestWeatherData(currentState.coord),
-    );
+    buttonUpdate.addEventListener('click', () => {
+      loadingComponent.show();
+      _requestWeatherData(currentState.coord);
+      loadingComponent.hide();
+    });
 
-    tempsDiv.classList.add('current-weather__temperature');
-    windsDiv.classList.add('current-weather__winds');
-    lastUpdatedDiv.classList.add('current-weather__last-updated');
     article.append(...[tempsDiv, windsDiv, buttonUpdate, lastUpdatedDiv]);
 
     frag.replaceChildren(article);

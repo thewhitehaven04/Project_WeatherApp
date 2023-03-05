@@ -22,11 +22,11 @@ class OpenWeatherClient {
     const urlSearchParams = stringifyQueryParameters(params, {
       appid: this.apiKey,
     });
-
-    console.dir(urlSearchParams);
+    
     return await fetch(`${this.rootUrl}/${relativeUrl}?${urlSearchParams}`, {
       method: method,
       body: JSON.stringify(body),
+      mode: 'cors'
     });
   }
 

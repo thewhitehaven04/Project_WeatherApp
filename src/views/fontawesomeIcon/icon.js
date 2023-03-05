@@ -35,9 +35,9 @@ const FeelsLikeIcon = () =>
 
 const DirectionIcon = () => FontAwesomeIconFactory('fa-regular', 'fa-compass');
 
-const GustIcon = () => FontAwesomeIconFactory('fa-regular', 'fa-wind');
+const GustIcon = () => FontAwesomeIconFactory('fa-solid', 'fa-wind');
 
-const SpeedIcon = () => FontAwesomeIconFactory('fa-regular', 'fa-gauge');
+const SpeedIcon = () => FontAwesomeIconFactory('fa-solid', 'fa-gauge');
 
 export {
   TemperatureLowIcon,

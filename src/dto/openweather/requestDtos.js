@@ -78,9 +78,21 @@
  */
 
 /**
- * Current weather data enriched with the datetime of last update
- * @typedef {CurrentWeatherResponseDto & {lastUpdated: Date}} CurrentWeatherInfo
+ * @typedef {{
+ * clouds: ?CloudsDto,
+ * main: ?MainDto,
+ * wind: ?WindDto,
+ * weather: ?WeatherDto[],
+ * base: ?string,
+ * visibility: ?string,
+ * rain: ?RainDto, 
+ * system: ?SystemDto
+ * dt: Number,
+ * dt_txt: String
+ * pop: Number
+ * }} ForecastWeatherResponseDto
  */
+
 
 /**
  * @typedef {Object} CityResponseDto
@@ -91,18 +103,4 @@
  * @property {Number} population city population  
  * @property {Number} sunrise time of sunrise in UTC
  * @property {Number} sunset time of sunset in UTC
- */
-
-/**
- * @typedef {{
- * list: CurrentWeatherResponseDto, 
- * city: CityResponseDto, 
- * cod: String, 
- * message: String, 
- * cnt: Number
- * }} ForecastResponseDto
- */
-
-/**
- * @typedef {{list: CurrentWeatherResponseDto[], city: CityResponseDto}} ForecastInfoDto
  */

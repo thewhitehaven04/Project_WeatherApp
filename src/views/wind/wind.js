@@ -53,9 +53,6 @@ const WindView = function ({ deg, gust, speed }, unit) {
       frag.appendChild(ul);
       return frag;
     },
-    hide: () => {
-      frag.replaceChildren();
-    },
   };
 };
 
