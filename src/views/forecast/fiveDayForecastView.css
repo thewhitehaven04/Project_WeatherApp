@@ -11,6 +11,20 @@
 
 .fiveday-forecast-section__bottom {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
+  flex-flow: column nowrap;
+  align-items: center;
+  row-gap: 10px;
+}
+
+.fiveday-forecast-section__bottom>button {
+  appearance: none;
+  border: 0px;
+  background-color: var(--seasalt);
+  border-bottom: 1px solid var(--wenge);
+  font-size: 1.5rem;
+}
+
+
+.fiveday-forecast-section__bottom>button:active {
+  transform: translateY(1px);
 }

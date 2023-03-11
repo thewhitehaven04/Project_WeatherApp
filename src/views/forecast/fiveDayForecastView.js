@@ -64,7 +64,7 @@ const fiveDayForecastViewFactory = function (
 
     const bottom = document.createElement('div');
     bottom.classList.add('fiveday-forecast-section__bottom');
-    bottom.append(lastUpdated, refreshButton);
+    bottom.append(refreshButton, lastUpdated);
 
     section.replaceChildren(divSections, bottom);
     frag.appendChild(section);

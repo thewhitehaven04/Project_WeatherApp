@@ -57,6 +57,8 @@
 
   justify-self: center;
   align-self: center;
+
+  filter: brightness(0.7); 
 }
 
 .temperature__large {
