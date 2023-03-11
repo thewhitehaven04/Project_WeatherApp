@@ -2,12 +2,12 @@
 
 :root {
   box-sizing: border-box;
-  font-size: 11pt;
+  font-size: 12pt;
   font-family: 'Inter', serif;
 
   --seasalt: #F9F8F8;
   --wenge: #504746;
-  --moonstone: 53A2BE;
+  --raisin-black: #30292F;
 
   background-color: var(--seasalt);
 }
@@ -17,6 +17,15 @@
 *::before {
   box-sizing: inherit;
   font-family: inherit;
+  font-size: inherit;
+}
+
+body {
+  height: 98dvh;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
 }
 
 ul {
@@ -24,6 +33,7 @@ ul {
   flex-flow: column;
   row-gap: 0.3em;
 
+  margin: 0px;
   padding-left: 0px;
 }
 
@@ -32,8 +42,13 @@ li {
 }
 
 .main-section-component {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+
   margin: 0 auto;
   width: max-content;
+  background-color: var(--burnt-sienna);
 }
 
 .font_capital {
@@ -44,10 +59,6 @@ li {
   font-size: 0.8rem;
 }
 
-button {
-  appearance: none;
-  border: 1px solid var(--wenge);
-  border-radius: 9px;
-
-  padding: 3px 10px;
+.footer {
+  height: min(150px, 10%);
 }

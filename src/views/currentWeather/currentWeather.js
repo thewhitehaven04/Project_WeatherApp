@@ -1,7 +1,11 @@
 import { units } from '../../dto/openweather/enums';
+import { OpenWeatherIconURLBuilderService } from '../../service/iconService';
 import { LastUpdatedView } from '../lastUpdated/lastUpdated';
 import { loadingComponentFactory } from '../loading/loading';
-import { TemperatureDataView } from '../temperature/temperature';
+import {
+  formatTemperatureForUnit,
+  TemperatureDataView,
+} from '../temperature/temperature';
 import { WindView } from '../wind/wind';
 import style from './style.css';
 
@@ -30,9 +34,14 @@ function currentWeatherView(unit, requestWeatherCallback) {
   const tempsDiv = document.createElement('div');
   const windsDiv = document.createElement('div');
   const lastUpdatedDiv = document.createElement('div');
+  const weatherIcon = document.createElement('img');
+  const spanAvgTemp = document.createElement('span');
+
   tempsDiv.classList.add('current-weather__temperature');
   windsDiv.classList.add('current-weather__winds');
   lastUpdatedDiv.classList.add('current-weather__last-updated');
+  weatherIcon.classList.add('current-weather__icon_normal');
+  spanAvgTemp.classList.add('current-weather__temperature-avg');
 
   /**
    * @param {Coordinates} params
@@ -58,6 +67,9 @@ function currentWeatherView(unit, requestWeatherCallback) {
     lastUpdatedDiv.replaceChildren(
       LastUpdatedView(currentState.lastUpdated).render(),
     );
+    weatherIcon.src = OpenWeatherIconURLBuilderService.getLargeIconSource(
+      currentState.weather[0].icon,
+    );
   };
 
   const render = function () {
@@ -66,6 +78,12 @@ function currentWeatherView(unit, requestWeatherCallback) {
     const loadingComponent = loadingComponentFactory(article);
 
     update();
+
+    spanAvgTemp.classList.add('temperature-font__large');
+    spanAvgTemp.textContent = formatTemperatureForUnit(
+      currentState.main.temp,
+      unit,
+    );
 
     const bottom = document.createElement('div');
     bottom.classList.add('current-weather-section__bottom');
@@ -79,7 +97,7 @@ function currentWeatherView(unit, requestWeatherCallback) {
     });
     bottom.append(buttonUpdate, lastUpdatedDiv);
 
-    article.append(...[tempsDiv, windsDiv, bottom]);
+    article.append(...[weatherIcon, spanAvgTemp, tempsDiv, windsDiv, bottom]);
 
     frag.replaceChildren(article);
 

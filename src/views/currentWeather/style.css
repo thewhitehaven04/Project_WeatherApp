@@ -1,24 +1,28 @@
 .current-weather {
   display: grid;
   grid-template-areas:
+    "avg icon"
+    "avg icon"
     "temperature winds"
     "temperature winds"
-    "temperature last-updated"
-    "temperature ."
     "bottom bottom";
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: min-content, 1fr;
+  gap: 10px;
+  padding: 10px;
 }
 
 .current-weather__winds {
-  grid-area: 'winds';
+  grid-area: winds;
 }
 
-.current-weather__last-updated {
-  grid-area: 'last-updated'
+.current-weather__temperature-avg {
+  grid-area: avg;
+  justify-self: center;
+  align-self: center;
 }
 
 .current-weather__temperature {
-  grid-area: 'temperature';
+  grid-area: temperature;
 }
 
 
@@ -26,6 +30,41 @@
   grid-area: bottom;
 
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
+  flex-flow: column nowrap;
+  align-items: center;
+  row-gap: 15px;
+
+  padding-top: 10px;
+}
+
+.current-weather-section__bottom>button {
+  appearance: none;
+  border: 0px;
+  background-color: var(--seasalt);
+  border-bottom: 1px solid var(--wenge);
+  font-size: 1.5rem;
+}
+
+
+.current-weather-section__bottom>button:active {
+  transform: translateY(1px);
+}
+
+.current-weather__icon_normal {
+  grid-area: icon;
+  width: 100px;
+  height: 100px;
+
+  justify-self: center;
+  align-self: center;
+}
+
+.temperature__large {
+  width: 100px;
+  height: 100px;
+}
+
+.temperature-font__large {
+  font-size: 24pt;
+  font-style: bold;
 }

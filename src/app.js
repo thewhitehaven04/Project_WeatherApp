@@ -8,17 +8,14 @@ import { menu } from './components/menu/menu';
 import { FivedayWeather } from './components/fiveDayWeather';
 import { fiveDayForecastViewFactory } from './views/forecast/fiveDayForecastView';
 import { forecastService } from './service/forecastService';
-
-function mainComponent() {
-  const mainSection = document.createElement('main');
-  mainSection.classList.add('main-section-component');
-  return mainSection;
-}
+import { footerComponent } from './components/footer/footer';
+import { mainComponent } from './components/main';
 
 const app = (function () {
   const unit = units.METRIC;
   const body = document.querySelector('body');
   const main = mainComponent();
+  const footer = footerComponent();
   const header = document.createElement('header');
 
   /**
@@ -53,7 +50,7 @@ const app = (function () {
         },
       ]).render(),
     );
-    body.append(header, main);
+    body.append(header, main, footer);
   }
 
   return { unit, run };

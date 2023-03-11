@@ -12,7 +12,7 @@ import {
  * @param {units} unit
  * @returns
  */
-const _formatTemperatureForUnit = (temp, unit) => {
+const formatTemperatureForUnit = (temp, unit) => {
   const singleDigitTemp = temp.toFixed(1);
   if (unit === units.STANDARD) {
     return `${singleDigitTemp} K`;
@@ -30,7 +30,7 @@ const _formatTemperatureForUnit = (temp, unit) => {
 const averageTemp = (temperature, unit) => {
   const li = document.createElement('li');
   const span = document.createElement('span');
-  span.textContent = `Avg temp: ${_formatTemperatureForUnit(
+  span.textContent = `Avg temp: ${formatTemperatureForUnit(
     temperature,
     unit,
   )}`;
@@ -46,7 +46,7 @@ const averageTemp = (temperature, unit) => {
 const minTemp = (temperature, unit) => {
   const li = document.createElement('li');
   const span = document.createElement('span');
-  span.textContent = `Min temp: ${_formatTemperatureForUnit(
+  span.textContent = `Min temp: ${formatTemperatureForUnit(
     temperature,
     unit,
   )}`;
@@ -62,7 +62,7 @@ const minTemp = (temperature, unit) => {
 const maxTemp = (temperature, unit) => {
   const li = document.createElement('li');
   const span = document.createElement('span');
-  span.textContent = `Max temp: ${_formatTemperatureForUnit(
+  span.textContent = `Max temp: ${formatTemperatureForUnit(
     temperature,
     unit,
   )}`;
@@ -78,7 +78,7 @@ const maxTemp = (temperature, unit) => {
 const feelsLike = (temperature, unit) => {
   const li = document.createElement('li');
   const span = document.createElement('span');
-  span.textContent = `Feels like: ${_formatTemperatureForUnit(
+  span.textContent = `Feels like: ${formatTemperatureForUnit(
     temperature,
     unit,
   )}`;
@@ -104,7 +104,6 @@ const TemperatureDataView = function (
       const ul = document.createElement('ul');
       ul.append(
         ...[
-          averageTemp(temp, unit),
           minTemp(temp_min, unit),
           maxTemp(temp_max, unit),
           feelsLike(feels_like, unit),
@@ -116,4 +115,4 @@ const TemperatureDataView = function (
   };
 };
 
-export { TemperatureDataView };
+export { TemperatureDataView, formatTemperatureForUnit };

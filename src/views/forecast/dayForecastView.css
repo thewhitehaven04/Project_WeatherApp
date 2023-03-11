@@ -1,0 +1,28 @@
+.day-forecast-section__bottom {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.day-forecast-section__grid {
+  display: grid;
+  grid-template-areas:
+    "date ."
+    "temperature wind"
+    "temperature wind";
+
+  column-gap: 25px;
+  row-gap: 10px;
+}
+
+.day-forecast-section__date {
+  grid-area: date;
+}
+
+.day-forecast-section__temperature {
+  grid-area: temperature;
+}
+
+.day-forecast-section__wind {
+  grid-area: wind;
+}

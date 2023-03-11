@@ -15,6 +15,7 @@ const apiKeys = {
  */
 const urls = {
   openWeatherApiRootUrl: 'https://api.openweathermap.org/',
+  openWeatherIconApi: 'https://openweathermap.org/',
 };
 
 export { apiKeys, urls };

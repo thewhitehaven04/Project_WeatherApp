@@ -1,0 +1,19 @@
+.footer {
+  display: flex;
+  flex-flow: row nowrap;
+
+  justify-content: center;
+  align-items: flex-end;
+
+  height: 100%;
+  gap: 15px;
+  padding: 15px 0px;
+}
+
+.footer-info__flex {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  gap: 25px;
+}
