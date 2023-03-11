@@ -1,8 +1,9 @@
-import { units } from '../../dto/openweather/requestEnums';
+import { units } from '../../dto/openweather/enums';
 import { LastUpdatedView } from '../lastUpdated/lastUpdated';
 import { loadingComponentFactory } from '../loading/loading';
 import { TemperatureDataView } from '../temperature/temperature';
 import { WindView } from '../wind/wind';
+import style from './style.css';
 
 /**
  * @template T
@@ -66,16 +67,19 @@ function currentWeatherView(unit, requestWeatherCallback) {
 
     update();
 
+    const bottom = document.createElement('div');
+    bottom.classList.add('current-weather-section__bottom');
+
     const buttonUpdate = document.createElement('button');
-    buttonUpdate.classList.add('current-weather__update');
     buttonUpdate.textContent = 'Update';
     buttonUpdate.addEventListener('click', () => {
       loadingComponent.show();
       _requestWeatherData(currentState.coord);
       loadingComponent.hide();
     });
+    bottom.append(buttonUpdate, lastUpdatedDiv);
 
-    article.append(...[tempsDiv, windsDiv, buttonUpdate, lastUpdatedDiv]);
+    article.append(...[tempsDiv, windsDiv, bottom]);
 
     frag.replaceChildren(article);
 

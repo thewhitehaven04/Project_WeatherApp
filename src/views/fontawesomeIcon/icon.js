@@ -29,7 +29,7 @@ const TemperatureHighIcon = () =>
 
 const CurrentTemperatureIcon = () =>
   FontAwesomeIconFactory('fa-solid', 'fa-temperature-half');
-
+  
 const FeelsLikeIcon = () =>
   FontAwesomeIconFactory('fa-solid', 'fa-temperature-empty');
 

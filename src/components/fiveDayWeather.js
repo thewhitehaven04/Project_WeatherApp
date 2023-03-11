@@ -13,17 +13,11 @@ const FivedayWeather = async function (viewFactory, service) {
    * @type UpdatableView<import('../service/forecastService').ForecastInfoDto>
    */
   service.update(app.unit, initialLocation);
-  let view = viewFactory(
-    (await service.getList()).map((forecastWeatherResponseDto) =>
-      dayForecastViewFactory(app.unit, forecastWeatherResponseDto),
-    ),
-    await service.getForecast(),
-    update,
-  );
+  let view = viewFactory(await service.getBiDailyForecast(), update);
 
   async function update() {
     service.update(app.unit, initialLocation);
-    view.setState(await service.getForecast());
+    view.setState(await service.getBiDailyForecast());
     view.update();
   }
 

@@ -1,19 +1,24 @@
-import { units } from './dto/openweather/requestEnums';
+import style from './style.css';
+import { units } from './dto/openweather/enums';
 import { currentWeatherView } from './views/currentWeather/currentWeather';
 import { CurrentWeather } from './components/currentWeather';
 import { currentWeatherService } from './service/currentWeatherService';
-// @ts-ignore
-import style from './style.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 import { menu } from './components/menu/menu';
 import { FivedayWeather } from './components/fiveDayWeather';
 import { fiveDayForecastViewFactory } from './views/forecast/fiveDayForecastView';
 import { forecastService } from './service/forecastService';
 
+function mainComponent() {
+  const mainSection = document.createElement('main');
+  mainSection.classList.add('main-section-component');
+  return mainSection;
+}
+
 const app = (function () {
   const unit = units.METRIC;
   const body = document.querySelector('body');
-  const main = document.createElement('main');
+  const main = mainComponent();
   const header = document.createElement('header');
 
   /**
@@ -21,6 +26,7 @@ const app = (function () {
    * @param {DocumentFragment} tabFragment tab fragment to display;
    */
   function displayTab(tabFragment) {
+    console.log(tabFragment.firstElementChild.innerHTML);
     main.replaceChildren();
     main.appendChild(tabFragment);
   }
@@ -34,7 +40,6 @@ const app = (function () {
       fiveDayForecastViewFactory,
       forecastService,
     );
-
     main.append(await currentWeather.render());
     header.append(
       menu([

@@ -1,4 +1,4 @@
-import { units } from '../../dto/openweather/requestEnums';
+import { units } from '../../dto/openweather/enums';
 import { OpenWeatherClient } from './openweather';
 
 /**

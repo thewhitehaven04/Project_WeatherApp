@@ -1,4 +1,4 @@
-import { units } from '../../dto/openweather/requestEnums';
+import { units } from '../../dto/openweather/enums';
 import { DirectionIcon, GustIcon, SpeedIcon } from '../fontawesomeIcon/icon';
 import { listItemWithIcon } from '../listItemWithIcon';
 

@@ -1,22 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter");
+
 :root {
   box-sizing: border-box;
-  font-family: 'Open Sans Regular', serif;
   font-size: 11pt;
+  font-family: 'Inter', serif;
+
+  --seasalt: #F9F8F8;
+  --wenge: #504746;
+  --moonstone: 53A2BE;
+
+  background-color: var(--seasalt);
 }
 
 *,
 *:after,
 *::before {
   box-sizing: inherit;
+  font-family: inherit;
 }
 
 ul {
   display: flex;
   flex-flow: column;
   row-gap: 0.3em;
+
+  padding-left: 0px;
 }
 
 li {
   list-style-type: none;
 }
 
+.main-section-component {
+  margin: 0 auto;
+  width: max-content;
+}
+
+.font_capital {
+  font-size: 1.5rem;
+}
+
+.font_small {
+  font-size: 0.8rem;
+}
+
+button {
+  appearance: none;
+  border: 1px solid var(--wenge);
+  border-radius: 9px;
+
+  padding: 3px 10px;
+}

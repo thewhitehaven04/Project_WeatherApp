@@ -1,6 +1,6 @@
 import { CurrentWeatherClient } from '../client/openweather/currentWeather';
 import { urls } from '../config/config';
-import { units } from '../dto/openweather/requestEnums';
+import { units } from '../dto/openweather/enums';
 
 /**
  * Current weather data enriched with the datetime of last update

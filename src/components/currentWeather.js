@@ -1,5 +1,5 @@
 import { app } from '../app';
-import { units } from '../dto/openweather/requestEnums';
+import { units } from '../dto/openweather/enums';
 import { getLocalCoordinates } from '../geolocation/geolocation';
 
 /**

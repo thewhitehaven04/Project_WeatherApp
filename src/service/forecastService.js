@@ -1,6 +1,6 @@
 import { ForecastClient } from '../client/openweather/forecast';
 import { urls } from '../config/config';
-import { units } from '../dto/openweather/requestEnums';
+import { units } from '../dto/openweather/enums';
 
 /**
  * @typedef {{
@@ -16,6 +16,7 @@ import { units } from '../dto/openweather/requestEnums';
  * @property {function():Promise<Array<ForecastWeatherResponseDto>>} getList
  * @property {function():Promise<CityResponseDto>} getCity
  * @property {function():Promise<ForecastInfoDto>} getForecast
+ * @property {function():Promise<ForecastInfoDto>} getBiDailyForecast
  */
 
 /**
@@ -49,7 +50,6 @@ const forecastService = (function (client) {
 
   /** @returns {Promise<ForecastInfoDto>} */
   const getForecast = async () => {
-    console.dir(await _response);
     return Object.assign(
       {},
       {
@@ -60,25 +60,24 @@ const forecastService = (function (client) {
     );
   };
 
-  const biDailyForecast = async () => {
+  /** @returns {Promise<ForecastInfoDto>} */
+  const getBiDailyForecast = async () => {
     return Object.assign(
       {},
       {
         city: await getCity(),
-        list: await (
-          await getList()
-        ).filter((forecastWeatherResponseDto) => {
+        list: (await getList()).filter((forecastWeatherResponseDto) => {
           const hour = new Date(
             forecastWeatherResponseDto.dt * 1000,
           ).getUTCHours();
-          const offset = new Date().getUTCHours() - new Date().getHours();
-          return hour + offset === 0 || hour + offset === 12;
+          return hour === 0 || hour === 12;
         }),
       },
+      lastUpdated,
     );
   };
 
-  return { update, getCity, getList, getForecast, biDailyForecast };
+  return { update, getCity, getList, getForecast, getBiDailyForecast };
 })(new ForecastClient(urls.openWeatherApiRootUrl));
 
 export { forecastService };

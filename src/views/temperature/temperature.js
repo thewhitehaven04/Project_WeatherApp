@@ -1,4 +1,4 @@
-import { units } from '../../dto/openweather/requestEnums';
+import { units } from '../../dto/openweather/enums';
 import {
   CurrentTemperatureIcon,
   FeelsLikeIcon,
@@ -13,12 +13,13 @@ import {
  * @returns
  */
 const _formatTemperatureForUnit = (temp, unit) => {
+  const singleDigitTemp = temp.toFixed(1);
   if (unit === units.STANDARD) {
-    return `${temp} K`;
+    return `${singleDigitTemp} K`;
   } else if (unit === units.METRIC) {
-    return `${temp}° C`;
+    return `${singleDigitTemp}° C`;
   }
-  return `${temp}° F`;
+  return `${singleDigitTemp}° F`;
 };
 
 /**
@@ -26,10 +27,10 @@ const _formatTemperatureForUnit = (temp, unit) => {
  * @param {units} unit
  * @returns {HTMLSpanElement}
  */
-const currentTemp = (temperature, unit) => {
+const averageTemp = (temperature, unit) => {
   const li = document.createElement('li');
   const span = document.createElement('span');
-  span.textContent = `Current tempeature: ${_formatTemperatureForUnit(
+  span.textContent = `Avg temp: ${_formatTemperatureForUnit(
     temperature,
     unit,
   )}`;
@@ -45,7 +46,7 @@ const currentTemp = (temperature, unit) => {
 const minTemp = (temperature, unit) => {
   const li = document.createElement('li');
   const span = document.createElement('span');
-  span.textContent = `Minimal temperature: ${_formatTemperatureForUnit(
+  span.textContent = `Min temp: ${_formatTemperatureForUnit(
     temperature,
     unit,
   )}`;
@@ -61,7 +62,7 @@ const minTemp = (temperature, unit) => {
 const maxTemp = (temperature, unit) => {
   const li = document.createElement('li');
   const span = document.createElement('span');
-  span.textContent = `Maximum temperature: ${_formatTemperatureForUnit(
+  span.textContent = `Max temp: ${_formatTemperatureForUnit(
     temperature,
     unit,
   )}`;
@@ -69,6 +70,11 @@ const maxTemp = (temperature, unit) => {
   return li;
 };
 
+/**
+ * @param {Number} temperature
+ * @param {units} unit
+ * @returns {HTMLLIElement}
+ */
 const feelsLike = (temperature, unit) => {
   const li = document.createElement('li');
   const span = document.createElement('span');
@@ -76,7 +82,7 @@ const feelsLike = (temperature, unit) => {
     temperature,
     unit,
   )}`;
-  li.appendChild(FeelsLikeIcon().render(), span);
+  li.append(FeelsLikeIcon().render(), span);
   return li;
 };
 
@@ -94,16 +100,17 @@ const TemperatureDataView = function (
     render: () => {
       const div = document.createElement('div');
       div.classList.add('temperature-widget');
+
       const ul = document.createElement('ul');
       ul.append(
         ...[
-          currentTemp(temp, unit),
+          averageTemp(temp, unit),
           minTemp(temp_min, unit),
           maxTemp(temp_max, unit),
+          feelsLike(feels_like, unit),
         ],
       );
-
-      div.append(ul, feelsLike(feels_like, unit));
+      div.append(ul);
       return div;
     },
   };
