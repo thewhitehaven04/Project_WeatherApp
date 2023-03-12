@@ -23,7 +23,6 @@ const app = (function () {
    * @param {DocumentFragment} tabFragment tab fragment to display;
    */
   function displayTab(tabFragment) {
-    console.log(tabFragment.firstElementChild.innerHTML);
     main.replaceChildren();
     main.appendChild(tabFragment);
   }

@@ -1,8 +1,8 @@
 .current-weather {
   display: grid;
   grid-template-areas:
-    "avg icon"
-    "avg icon"
+    "icon avg"
+    "icon avg"
     "temperature winds"
     "temperature winds"
     "daycycle daycycle"

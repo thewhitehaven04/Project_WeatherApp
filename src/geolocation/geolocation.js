@@ -9,10 +9,9 @@ async function getLocalCoordinates() {
       (err) => reject(err),
     ),
   );
-  const coords = await pr.coords;
   return {
-    lat: coords.latitude,
-    lon: coords.longitude
+    lat: await pr.coords.latitude,
+    lon: await pr.coords.longitude,
   };
 }
 

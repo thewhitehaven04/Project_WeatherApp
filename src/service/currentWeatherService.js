@@ -66,7 +66,7 @@ const currentWeatherService = ((client) => {
     return {
       sunset,
       sunrise,
-      dayLength: (response.sys.sunset - response.sys.sunset) * 1000,
+      dayLength: (response.sys.sunset - response.sys.sunrise) * 1000,
     };
   };
 

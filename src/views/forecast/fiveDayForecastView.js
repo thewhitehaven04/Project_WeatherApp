@@ -29,6 +29,7 @@ const fiveDayForecastViewFactory = function (
   );
 
   const frag = document.createDocumentFragment();
+  const lastUpdated = document.createElement('div');
 
   /** @param {import('../../service/forecastService').ForecastInfoDto} dayForecastViewStates */
   const setState = (dayForecastViewStates) => {
@@ -40,6 +41,7 @@ const fiveDayForecastViewFactory = function (
       dayForecastView.setState(state.list[index]);
       dayForecastView.update();
     });
+    lastUpdated.replaceChildren(LastUpdatedView(state.lastUpdated).render());
   };
 
   const render = function () {
@@ -55,8 +57,6 @@ const fiveDayForecastViewFactory = function (
       refreshWeatherDataCallback();
       loadingComponent.hide();
     });
-
-    const lastUpdated = LastUpdatedView(state.lastUpdated).render();
 
     const divSections = document.createElement('div');
     divSections.classList.add('forecast__grid');
