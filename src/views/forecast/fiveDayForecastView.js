@@ -47,15 +47,11 @@ const fiveDayForecastViewFactory = function (
   const render = function () {
     const refreshButton = document.createElement('button');
     const section = document.createElement('section');
-    const loadingComponent = loadingComponentFactory(section);
-
     update();
 
     refreshButton.textContent = 'Update';
     refreshButton.addEventListener('click', () => {
-      loadingComponent.show();
       refreshWeatherDataCallback();
-      loadingComponent.hide();
     });
 
     const divSections = document.createElement('div');

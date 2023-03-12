@@ -81,7 +81,6 @@ function currentWeatherView(unit, requestWeatherCallback) {
   const render = function () {
     const article = document.createElement('article');
     article.classList.add('current-weather');
-    const loadingComponent = loadingComponentFactory(article);
 
     update();
 
@@ -91,9 +90,7 @@ function currentWeatherView(unit, requestWeatherCallback) {
     const buttonUpdate = document.createElement('button');
     buttonUpdate.textContent = 'Update';
     buttonUpdate.addEventListener('click', () => {
-      loadingComponent.show();
       _requestWeatherData(currentState.coord);
-      loadingComponent.hide();
     });
     bottom.append(buttonUpdate, lastUpdatedDiv);
 

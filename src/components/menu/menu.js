@@ -11,10 +11,10 @@ import style from './menu.css';
  */
 
 /**
- * @constructs Menu
+ * @returns {Menu}
  * @param {Array<MenuEntry>} menuEntries
  */
-const menu = function (menuEntries) {
+const menuFactory = function (menuEntries) {
   const frag = document.createDocumentFragment();
   const ul = document.createElement('ul');
 
@@ -40,4 +40,4 @@ const menu = function (menuEntries) {
   };
 };
 
-export { menu };
+export { menuFactory };

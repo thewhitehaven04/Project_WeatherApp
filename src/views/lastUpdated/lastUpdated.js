@@ -11,10 +11,7 @@ function LastUpdatedView(lastUpdated) {
   return {
     render: () => {
       const span = document.createElement('span');
-      span.innerHTML = `Last updated: ${format(
-        lastUpdated,
-        'HH:mm:ss',
-      )}`;
+      span.innerHTML = `Last updated: ${format(lastUpdated, 'HH:mm:ss')}`;
       frag.appendChild(span);
       return frag;
     },

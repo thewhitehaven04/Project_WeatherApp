@@ -13,7 +13,7 @@ import style from './dayForecastView.css';
 
 /**
  * @type DayForecastViewFactory
- * @constructs DayForecastView
+ * @returns {DayForecastView}
  * @param {units} unit
  * @param {ForecastWeatherResponseDto} forecastWeatherResponseDto
  */
@@ -29,7 +29,10 @@ const dayForecastViewFactory = function (unit, forecastWeatherResponseDto) {
 
   datetime.classList.add('day-forecast-section__date');
   tempsDiv.classList.add('day-forecast-section__temperature');
-  temperatureLarge.classList.add('day-forecast-section__temperature_large', 'font_capital');
+  temperatureLarge.classList.add(
+    'day-forecast-section__temperature_large',
+    'font_capital',
+  );
   weatherIcon.classList.add('day-forecast-section__weather');
 
   const update = function () {

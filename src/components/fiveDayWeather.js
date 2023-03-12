@@ -1,6 +1,6 @@
 import { app } from '../app';
+import { EventBus } from '../event/eventBus';
 import { getLocalCoordinates } from '../geolocation/geolocation';
-import { dayForecastViewFactory } from '../views/forecast/dayForecastView';
 
 /**
  * @param {import('../views/forecast/fiveDayForecastView').FiveDayForecastViewFactory} viewFactory
@@ -16,9 +16,11 @@ const FivedayWeather = async function (viewFactory, service) {
   let view = viewFactory(await service.getBiDailyForecast(), update);
 
   async function update() {
+    EventBus.notify('requestShowLoading', {});
     service.update(app.unit, initialLocation);
     view.setState(await service.getBiDailyForecast());
     view.update();
+    EventBus.notify('requestStopLoading', {});
   }
 
   function render() {

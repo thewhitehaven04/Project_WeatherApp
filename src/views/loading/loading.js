@@ -11,15 +11,17 @@ import style from './loading.css';
  * @param {HTMLElement} root
  */
 const loadingComponentFactory = function (root) {
-  /**
-   * @constructs LoadingComponent
-   */
+  const absolutePosDiv = document.createElement('div');
+  absolutePosDiv.classList.add('absolute-pos');
+
   return {
     show: function () {
-      root.classList.add('loading');
+      absolutePosDiv.classList.add('loading');
+      root.appendChild(absolutePosDiv);
     },
     hide: function () {
-      root.classList.remove('loading');
+      absolutePosDiv.classList.remove('loading');
+      root.removeChild(absolutePosDiv);
     },
   };
 };

@@ -1,4 +1,5 @@
 import { app } from '../app';
+import { EventBus } from '../event/eventBus';
 import { getLocalCoordinates } from '../geolocation/geolocation';
 
 /**
@@ -17,9 +18,13 @@ const CurrentWeather = function (
 
   /** @param {Coordinates} location */
   async function update(location) {
+    EventBus.notify('requestShowLoading', {});
     CurrentWeatherService.update(unit, location);
-    view.setState(await CurrentWeatherService.getCurrentWeather());
-    view.update();
+    setTimeout(async () => {
+      view.setState(await CurrentWeatherService.getCurrentWeather());
+      view.update();
+      EventBus.notify('requestStopLoading', {});
+    }, 5000);
   }
 
   async function render() {

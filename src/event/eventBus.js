@@ -12,7 +12,6 @@ const EventBus = (() => {
   const subscribe = function (eventName, cb) {
     if (!observers.has(eventName)) {
       observers.set(eventName, []);
-      return;
     }
     observers.get(eventName).push(cb);
   };
@@ -23,6 +22,7 @@ const EventBus = (() => {
    * @param {Object} data
    */
   const notify = function (eventName, data) {
+    console.log('Dispatching event ' + eventName + ' to cbs: ' + data);
     observers.get(eventName).forEach((cb) => cb(data));
   };
 
