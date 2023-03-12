@@ -73,7 +73,7 @@
  * base: ?string,
  * visibility: ?string,
  * rain: ?RainDto, 
- * system: ?SystemDto
+ * sys: ?SystemDto
  * }} CurrentWeatherResponseDto
  */
 

@@ -3,16 +3,26 @@ import { urls } from '../config/config';
 import { units } from '../dto/openweather/enums';
 
 /**
+ * @typedef DayCycleDto information about day cycle
+ * @property {Date} sunset
+ * @property {Date} sunrise
+ * @property {Number} dayLength
+ */
+
+/**
  * Current weather data enriched with the datetime of last update
- * @typedef {CurrentWeatherResponseDto & {lastUpdated: Date}} CurrentWeatherInfo
+ * @typedef {Object} CurrentWeatherInfo
+ * @property {WeatherDto[]} weather
+ * @property {WindDto} wind
+ * @property {MainDto} main
+ * @property {DayCycleDto} dayCycle
+ * @property {Coordinates} coord
+ * @property {Date} lastUpdated
  */
 
 /**
  * @typedef {Object} WeatherService
  * @property {function(units, Coordinates):void} update
- * @property {function():Promise<MainDto>} getMain
- * @property {function():Promise<WeatherDto[]>} getWeather
- * @property {function():Promise<WindDto>} getWind
  * @property {function():Promise<CurrentWeatherInfo>} getCurrentWeather
  */
 
@@ -39,29 +49,44 @@ const currentWeatherService = ((client) => {
     _response = client.getCurrentWeather(coords, unit);
   }
 
-  /**
-   * @returns {Promise<MainDto>}
-   */
+  /** @returns {Promise<MainDto>} */
   const getMain = async () => (await _response).main;
-  /**
-   * @returns {Promise<WeatherDto[]>}
-   */
+
+  /** @returns {Promise<WeatherDto[]>} */
   const getWeather = async () => (await _response).weather;
-  /**
-   * @returns {Promise<WindDto>}
-   */
+
+  /** @returns {Promise<WindDto>} */
   const getWind = async () => (await _response).wind;
-  /**
-   * @returns {Promise<CurrentWeatherInfo>}
-   */
-  const getCurrentWeather = async () =>
-    Object.assign({}, await _response, lastUpdated);
+
+  /** @returns {Promise<DayCycleDto>} */
+  const getDayCycle = async () => {
+    const response = await _response;
+    const sunset = new Date(response.sys.sunset * 1000);
+    const sunrise = new Date(response.sys.sunrise * 1000);
+    return {
+      sunset,
+      sunrise,
+      dayLength: (response.sys.sunset - response.sys.sunset) * 1000,
+    };
+  };
+
+  /** @returns {Promise<CurrentWeatherInfo>} */
+  const getCurrentWeather = async () => {
+    return Object.assign(
+      {},
+      {
+        main: (await _response).main,
+        weather: (await _response).weather,
+        wind: (await _response).wind,
+        dayCycle: await getDayCycle(),
+        coord: (await _response).coord,
+      },
+      lastUpdated,
+    );
+  };
 
   return {
     update,
-    getMain,
-    getWeather,
-    getWind,
     getCurrentWeather,
   };
 })(new CurrentWeatherClient(urls.openWeatherApiRootUrl));

@@ -5,6 +5,7 @@
     "avg icon"
     "temperature winds"
     "temperature winds"
+    "daycycle daycycle"
     "bottom bottom";
   grid-template-columns: min-content, 1fr;
   gap: 10px;
@@ -58,7 +59,11 @@
   justify-self: center;
   align-self: center;
 
-  filter: brightness(0.7); 
+  filter: brightness(0.7);
+}
+
+.current-weather__daycycle {
+  grid-area: daycycle;
 }
 
 .temperature__large {

@@ -7,10 +7,11 @@
 .day-forecast-section__grid {
   display: grid;
   grid-template-areas:
-    "date ."
-    "temperature wind"
-    "temperature wind";
-
+    'date date .'
+    'weather temperature__large temperature'
+    'weather temperature__large temperature';
+  grid-template-columns: 60px max-content max-content;
+  align-items: center;
   column-gap: 25px;
   row-gap: 10px;
 }
@@ -23,6 +24,13 @@
   grid-area: temperature;
 }
 
-.day-forecast-section__wind {
-  grid-area: wind;
+.day-forecast-section__temperature_large {
+  grid-area: temperature__large;
+}
+
+.day-forecast-section__weather {
+  grid-area: weather;
+  width: 80px;
+  height: 80px;
+  filter: brightness(0.7);
 }

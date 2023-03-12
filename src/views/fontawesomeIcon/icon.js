@@ -29,7 +29,7 @@ const TemperatureHighIcon = () =>
 
 const CurrentTemperatureIcon = () =>
   FontAwesomeIconFactory('fa-solid', 'fa-temperature-half');
-  
+
 const FeelsLikeIcon = () =>
   FontAwesomeIconFactory('fa-solid', 'fa-temperature-empty');
 
@@ -39,6 +39,12 @@ const GustIcon = () => FontAwesomeIconFactory('fa-solid', 'fa-wind');
 
 const SpeedIcon = () => FontAwesomeIconFactory('fa-solid', 'fa-gauge');
 
+const SunriseIcon = () => FontAwesomeIconFactory('fa-solid', 'fa-sun');
+
+const SunsetIcon = () => FontAwesomeIconFactory('fa-regular', 'fa-sun');
+
+const DurationIcon = () => FontAwesomeIconFactory('fa-regular', 'fa-clock');
+
 export {
   TemperatureLowIcon,
   TemperatureHighIcon,
@@ -47,4 +53,7 @@ export {
   DirectionIcon,
   GustIcon,
   SpeedIcon,
+  SunriseIcon,
+  SunsetIcon,
+  DurationIcon
 };

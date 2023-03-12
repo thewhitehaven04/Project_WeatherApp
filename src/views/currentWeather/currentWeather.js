@@ -1,5 +1,6 @@
 import { units } from '../../dto/openweather/enums';
 import { OpenWeatherIconURLBuilderService } from '../../service/iconService';
+import { dayCycleViewFactory } from '../dayCycle/dayCycle';
 import { LastUpdatedView } from '../lastUpdated/lastUpdated';
 import { loadingComponentFactory } from '../loading/loading';
 import {
@@ -14,20 +15,15 @@ import style from './style.css';
  * @typedef {UpdatableView<T>} CurrentWeatherView<T>
  */
 
-/**
- * @typedef {function(units, Function): CurrentWeatherView<CurrentWeatherResponseDto>} CurrentWeatherViewFactory
- */
+/** @typedef {function(units, Function): CurrentWeatherView<import('../../service/currentWeatherService').CurrentWeatherInfo>} CurrentWeatherViewFactory */
 
 /**
  * @param {units} unit
  * @param {function(Coordinates):void} requestWeatherCallback
- * @constructs CurrentWeatherView<CurrentWeatherResponseDto>
- * @param {units} unit
+ * @returns {CurrentWeatherView<import('../../service/currentWeatherService').CurrentWeatherInfo>}
  */
 function currentWeatherView(unit, requestWeatherCallback) {
-  /**
-   * @type {import('../../service/currentWeatherService').CurrentWeatherInfo}
-   */
+  /** @type {import('../../service/currentWeatherService').CurrentWeatherInfo} */
   let currentState;
 
   let frag = document.createDocumentFragment();
@@ -36,16 +32,19 @@ function currentWeatherView(unit, requestWeatherCallback) {
   const lastUpdatedDiv = document.createElement('div');
   const weatherIcon = document.createElement('img');
   const spanAvgTemp = document.createElement('span');
+  const daycycle = document.createElement('ul');
 
   tempsDiv.classList.add('current-weather__temperature');
   windsDiv.classList.add('current-weather__winds');
   lastUpdatedDiv.classList.add('current-weather__last-updated');
   weatherIcon.classList.add('current-weather__icon_normal');
-  spanAvgTemp.classList.add('current-weather__temperature-avg');
+  spanAvgTemp.classList.add(
+    'current-weather__temperature-avg',
+    'temperature-font__large',
+  );
+  daycycle.classList.add('current-weather__daycycle');
 
-  /**
-   * @param {Coordinates} params
-   */
+  /** @param {Coordinates} params */
   const _requestWeatherData = (params) => requestWeatherCallback(params);
 
   /**
@@ -70,6 +69,13 @@ function currentWeatherView(unit, requestWeatherCallback) {
     weatherIcon.src = OpenWeatherIconURLBuilderService.getLargeIconSource(
       currentState.weather[0].icon,
     );
+    spanAvgTemp.textContent = formatTemperatureForUnit(
+      currentState.main.temp,
+      unit,
+    );
+    daycycle.replaceChildren(
+      dayCycleViewFactory(currentState.dayCycle).render(),
+    );
   };
 
   const render = function () {
@@ -78,12 +84,6 @@ function currentWeatherView(unit, requestWeatherCallback) {
     const loadingComponent = loadingComponentFactory(article);
 
     update();
-
-    spanAvgTemp.classList.add('temperature-font__large');
-    spanAvgTemp.textContent = formatTemperatureForUnit(
-      currentState.main.temp,
-      unit,
-    );
 
     const bottom = document.createElement('div');
     bottom.classList.add('current-weather-section__bottom');
@@ -97,7 +97,9 @@ function currentWeatherView(unit, requestWeatherCallback) {
     });
     bottom.append(buttonUpdate, lastUpdatedDiv);
 
-    article.append(...[weatherIcon, spanAvgTemp, tempsDiv, windsDiv, bottom]);
+    article.append(
+      ...[weatherIcon, spanAvgTemp, tempsDiv, windsDiv, daycycle, bottom],
+    );
 
     frag.replaceChildren(article);
 

@@ -1,20 +1,27 @@
 import style from './loading.css';
 /**
- * @typedef {{
- * show: {function(): void},
- * hide: {function(): void}
- * }} LoadingComponent
+ * @typedef LoadingComponent
+ * @property {function():void} show
+ * @property {function():void} hide
  */
 
 /**
  * Renders a loading wheel.
- * @constructs LoadingComponent
+ * @returns {LoadingComponent}
  * @param {HTMLElement} root
  */
 const loadingComponentFactory = function (root) {
-  const show = () => root.classList.add('loading');
-  const hide = () => root.classList.remove('loading');
-  return { show, hide };
+  /**
+   * @constructs LoadingComponent
+   */
+  return {
+    show: function () {
+      root.classList.add('loading');
+    },
+    hide: function () {
+      root.classList.remove('loading');
+    },
+  };
 };
 
 export { loadingComponentFactory };
