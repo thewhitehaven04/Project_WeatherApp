@@ -24,7 +24,7 @@ const CurrentWeather = function (
       view.setState(await CurrentWeatherService.getCurrentWeather());
       view.update();
       EventBus.notify('requestStopLoading', {});
-    }, 5000);
+    }, 3000);
   }
 
   async function render() {

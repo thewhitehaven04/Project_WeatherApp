@@ -17,10 +17,12 @@ const FivedayWeather = async function (viewFactory, service) {
 
   async function update() {
     EventBus.notify('requestShowLoading', {});
-    service.update(app.unit, initialLocation);
-    view.setState(await service.getBiDailyForecast());
-    view.update();
+    setTimeout(async () => {
+      service.update(app.unit, initialLocation);
+      view.setState(await service.getBiDailyForecast());
+      view.update();
     EventBus.notify('requestStopLoading', {});
+    }, 2500);
   }
 
   function render() {

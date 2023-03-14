@@ -49,15 +49,6 @@ const currentWeatherService = ((client) => {
     _response = client.getCurrentWeather(coords, unit);
   }
 
-  /** @returns {Promise<MainDto>} */
-  const getMain = async () => (await _response).main;
-
-  /** @returns {Promise<WeatherDto[]>} */
-  const getWeather = async () => (await _response).weather;
-
-  /** @returns {Promise<WindDto>} */
-  const getWind = async () => (await _response).wind;
-
   /** @returns {Promise<DayCycleDto>} */
   const getDayCycle = async () => {
     const response = await _response;

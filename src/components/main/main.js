@@ -8,20 +8,10 @@ const MainComponent =
   (() => {
     const frag = document.createDocumentFragment();
     const mainSection = document.createElement('main');
-    mainSection.classList.add('main');
-
-    const overlay = document.createElement('div');
-    overlay.classList.add('overlay');
-
-    const loadingComponent = loadingComponentFactory(overlay);
-
-    EventBus.subscribe('requestShowLoading', loadingComponent.show);
-    EventBus.subscribe('requestStopLoading', loadingComponent.hide);
 
     function render() {
-      mainSection.classList.add('main-section-component');
-      overlay.appendChild(mainSection);
-      frag.appendChild(overlay);
+      mainSection.classList.add('main-section-component', 'main');
+      frag.appendChild(mainSection);
       return frag;
     }
 

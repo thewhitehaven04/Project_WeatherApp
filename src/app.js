@@ -4,23 +4,26 @@ import { currentWeatherView } from './views/currentWeather/currentWeather';
 import { CurrentWeather } from './components/currentWeather';
 import { currentWeatherService } from './service/currentWeatherService';
 import '@fortawesome/fontawesome-free/js/all.js';
-import { menu, menuFactory } from './components/menu/menu';
+import { menuFactory } from './components/menu/menu';
 import { FivedayWeather } from './components/fiveDayWeather';
 import { fiveDayForecastViewFactory } from './views/forecast/fiveDayForecastView';
 import { forecastService } from './service/forecastService';
 import { footerComponent } from './components/footer/footer';
 import { MainComponent } from './components/main/main';
 import { EventBus } from './event/eventBus';
+import { loadingComponentFactory } from './views/loading/loading';
 
 const app = (function () {
   const unit = units.METRIC;
-  const body = document.querySelector('body');
-  const mainComponent = MainComponent;
-  const footer = footerComponent();
   const header = document.createElement('header');
+  const body = document.querySelector('body');
+  const overlay = document.createElement('div');
+  const loadingComponent = loadingComponentFactory(overlay);
+
+  EventBus.subscribe('requestShowLoading', loadingComponent.show);
+  EventBus.subscribe('requestStopLoading', loadingComponent.hide);
 
   async function run() {
-    EventBus.notify('requestShowLoading', {});
     const currentWeather = CurrentWeather(
       currentWeatherService,
       currentWeatherView,
@@ -29,23 +32,24 @@ const app = (function () {
       fiveDayForecastViewFactory,
       forecastService,
     );
-    mainComponent.displayTab(await currentWeather.render());
-    EventBus.notify('requestStopLoading', {});
+    MainComponent.displayTab(await currentWeather.render());
     header.append(
       menuFactory([
         {
           displayName: 'Current weather',
           callback: async () =>
-            mainComponent.displayTab(await currentWeather.render()),
+            MainComponent.displayTab(await currentWeather.render()),
         },
         {
           displayName: 'Five-day forecast',
           callback: async () =>
-            mainComponent.displayTab(fivedayWeather.render()),
+            MainComponent.displayTab(fivedayWeather.render()),
         },
       ]).render(),
     );
-    body.append(header, mainComponent.render(), footer);
+
+    overlay.append(header, MainComponent.render(), footerComponent());
+    body.appendChild(overlay);
   }
 
   return { unit, run };

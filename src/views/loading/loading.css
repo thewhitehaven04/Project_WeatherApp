@@ -8,33 +8,29 @@
   }
 }
 
-.loading {
-  position: relative;
+.overlay {
+  position: fixed;
+  z-index: 998;
+
+  width: 100%;
+  height: 100%;
+
+  backdrop-filter: brightness(0.3);
+}
+
+.spinner {
+  position: absolute;
 
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   
-  width: 20px;
-  height: 20px;
+  transform: translate(-50%, -50%);
 
-  border: 6px solid gray;
-  border-left: 0px;
-  border-top: 0px;
-  border-right: 0px;
-  border-radius: 50%;
-
-  height: 50%;
-  animation: rotation 2s linear 0s infinite;
+  color: white;
+  animation: rotation 2s  infinite;
   z-index: 999;
-}
 
-.absolute-pos {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.7;
+  font-size: 24pt;
 }
 
 @keyframes rotation {

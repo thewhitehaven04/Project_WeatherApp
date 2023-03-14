@@ -21,11 +21,11 @@
 }
 
 body {
-  height: 98dvh;
-
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
+
+  margin: 0;
 }
 
 ul {

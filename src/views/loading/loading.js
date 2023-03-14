@@ -1,3 +1,4 @@
+import { SpinnerIcon } from '../fontawesomeIcon/icon';
 import style from './loading.css';
 /**
  * @typedef LoadingComponent
@@ -11,17 +12,19 @@ import style from './loading.css';
  * @param {HTMLElement} root
  */
 const loadingComponentFactory = function (root) {
-  const absolutePosDiv = document.createElement('div');
-  absolutePosDiv.classList.add('absolute-pos');
+  const spinner = document.createElement('div');
+  spinner.appendChild(SpinnerIcon().render());
 
   return {
     show: function () {
-      absolutePosDiv.classList.add('loading');
-      root.appendChild(absolutePosDiv);
+      root.appendChild(spinner);
+      root.classList.add('overlay');
+      spinner.classList.add('spinner');
     },
     hide: function () {
-      absolutePosDiv.classList.remove('loading');
-      root.removeChild(absolutePosDiv);
+      root.removeChild(spinner);
+      root.classList.remove('overlay');
+      spinner.classList.remove('spinner');
     },
   };
 };

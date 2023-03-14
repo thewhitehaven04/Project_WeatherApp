@@ -45,6 +45,8 @@ const SunsetIcon = () => FontAwesomeIconFactory('fa-regular', 'fa-sun');
 
 const DurationIcon = () => FontAwesomeIconFactory('fa-regular', 'fa-clock');
 
+const SpinnerIcon = () => FontAwesomeIconFactory('fa-solid', 'fa-spinner');
+
 export {
   TemperatureLowIcon,
   TemperatureHighIcon,
@@ -55,5 +57,6 @@ export {
   SpeedIcon,
   SunriseIcon,
   SunsetIcon,
-  DurationIcon
+  DurationIcon,
+  SpinnerIcon
 };
