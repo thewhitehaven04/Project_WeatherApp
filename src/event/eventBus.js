@@ -22,7 +22,6 @@ const EventBus = (() => {
    * @param {Object} data
    */
   const notify = function (eventName, data) {
-    console.log('Dispatching event ' + eventName + ' to cbs: ' + data);
     if (observers.get(eventName)) {
       observers.get(eventName).forEach((cb) => cb(data));
     }

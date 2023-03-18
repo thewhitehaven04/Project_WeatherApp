@@ -72,7 +72,7 @@
  * weather: ?WeatherDto[],
  * base: ?string,
  * visibility: ?string,
- * rain: ?RainDto, 
+ * rain: ?RainDto,
  * sys: ?SystemDto
  * }} CurrentWeatherResponseDto
  */
@@ -85,7 +85,7 @@
  * weather: ?WeatherDto[],
  * base: ?string,
  * visibility: ?string,
- * rain: ?RainDto, 
+ * rain: ?RainDto,
  * system: ?SystemDto
  * dt: Number,
  * dt_txt: String
@@ -93,14 +93,13 @@
  * }} ForecastWeatherResponseDto
  */
 
-
 /**
  * @typedef {Object} CityResponseDto
  * @property {Number} id
  * @property {Coordinates} coord city location
- * @property {String} country  
+ * @property {String} country
  * @property {Number} timezone shift from UTC in seconds
- * @property {Number} population city population  
+ * @property {Number} population city population
  * @property {Number} sunrise time of sunrise in UTC
  * @property {Number} sunset time of sunset in UTC
  */

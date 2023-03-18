@@ -20,12 +20,16 @@
   font-size: inherit;
 }
 
+
 body {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-rows: max-content max-content 1fr;
 
   margin: 0;
+}
+
+footer {
+  align-self: flex-end;
 }
 
 ul {
@@ -57,8 +61,4 @@ li {
 
 .font_small {
   font-size: 0.8rem;
-}
-
-.footer {
-  height: min(150px, 10%);
 }

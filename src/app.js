@@ -8,7 +8,7 @@ import { menuFactory } from './components/menu/menu';
 import { FivedayWeather } from './components/fiveDayWeather';
 import { fiveDayForecastViewFactory } from './views/forecast/fiveDayForecastView';
 import { forecastService } from './service/forecastService';
-import { footerComponent } from './components/footer/footer';
+import { FooterComponent } from './components/footer/footer';
 import { MainComponent } from './components/main/main';
 import { EventBus } from './event/eventBus';
 import { loadingComponentFactory } from './views/loading/loading';
@@ -17,8 +17,7 @@ const app = (function () {
   const unit = units.METRIC;
   const header = document.createElement('header');
   const body = document.querySelector('body');
-  const overlay = document.createElement('div');
-  const loadingComponent = loadingComponentFactory(overlay);
+  const loadingComponent = loadingComponentFactory(body);
 
   EventBus.subscribe('requestShowLoading', loadingComponent.show);
   EventBus.subscribe('requestStopLoading', loadingComponent.hide);
@@ -48,8 +47,7 @@ const app = (function () {
       ]).render(),
     );
 
-    overlay.append(header, MainComponent.render(), footerComponent());
-    body.appendChild(overlay);
+    body.append(header, MainComponent.render(), FooterComponent.render());
   }
 
   return { unit, run };

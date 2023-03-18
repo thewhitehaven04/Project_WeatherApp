@@ -3,9 +3,8 @@
   flex-flow: row nowrap;
 
   justify-content: center;
-  align-items: flex-end;
+  align-items: baseline;
 
-  height: 100%;
   gap: 15px;
   padding: 15px 0px;
 }
