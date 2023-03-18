@@ -9,9 +9,7 @@ import { getLocalCoordinates } from '../geolocation/geolocation';
 const FivedayWeather = async function (viewFactory, service) {
   /** @type {Coordinates} */
   let initialLocation = await getLocalCoordinates();
-  /**
-   * @type UpdatableView<import('../service/forecastService').ForecastInfoDto>
-   */
+  /** @type UpdatableView<import('../service/forecastService').ForecastInfoDto> */
   service.update(app.unit, initialLocation);
   let view = viewFactory(await service.getBiDailyForecast(), update);
 

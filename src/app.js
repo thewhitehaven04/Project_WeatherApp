@@ -23,7 +23,7 @@ const app = (function () {
   EventBus.subscribe('requestStopLoading', loadingComponent.hide);
 
   async function run() {
-    const currentWeather = CurrentWeather(
+    const currentWeather = await CurrentWeather(
       currentWeatherService,
       currentWeatherView,
     );
@@ -31,13 +31,13 @@ const app = (function () {
       fiveDayForecastViewFactory,
       forecastService,
     );
-    MainComponent.displayTab(await currentWeather.render());
+    MainComponent.displayTab(currentWeather.render());
     header.append(
       menuFactory([
         {
           displayName: 'Current weather',
           callback: async () =>
-            MainComponent.displayTab(await currentWeather.render()),
+            MainComponent.displayTab(currentWeather.render()),
         },
         {
           displayName: 'Five-day forecast',

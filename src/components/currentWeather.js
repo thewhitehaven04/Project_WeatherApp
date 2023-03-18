@@ -6,7 +6,7 @@ import { getLocalCoordinates } from '../geolocation/geolocation';
  * @param {import("../service/currentWeatherService").WeatherService} CurrentWeatherService
  * @param {import('../views/currentWeather/currentWeather').CurrentWeatherViewFactory} currentWeatherViewFactory
  */
-const CurrentWeather = function (
+const CurrentWeather = async function (
   CurrentWeatherService,
   currentWeatherViewFactory,
 ) {
@@ -15,6 +15,8 @@ const CurrentWeather = function (
   const unit = app.unit;
 
   const view = currentWeatherViewFactory(unit, update);
+  CurrentWeatherService.update(unit, await initialLocation);
+  view.setState(await CurrentWeatherService.getCurrentWeather());
 
   /** @param {Coordinates} location */
   async function update(location) {
@@ -27,9 +29,7 @@ const CurrentWeather = function (
     }, 3000);
   }
 
-  async function render() {
-    CurrentWeatherService.update(unit, await initialLocation);
-    view.setState(await CurrentWeatherService.getCurrentWeather());
+  function render() {
     rootChild = view.render();
     return rootChild;
   }
